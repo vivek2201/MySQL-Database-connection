@@ -6,6 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
 
 
 public class jdbcconnection {
@@ -21,9 +25,17 @@ public class jdbcconnection {
 		//ResultSet rs=s.executeQuery("select id from employeeinfo where name='Sheetal';");
 		ResultSet rs=s.executeQuery("select * from employeeinfo;");
 		rs.next();
-		System.out.println(rs.getString("id"));
-		System.out.println(rs.getString("name"));
-		System.out.println(rs.getString("age"));
+		
+		//intergration the database with selenium code
+		System.setProperty("webdriver.chrome.driver", "C:\\Users\\PriyaS\\eclipse-workspace\\databasetesting\\Driver\\chromedriver.exe");
+		WebDriver driver=new ChromeDriver();
+		driver.get("https://login.salesforce.com");
+		driver.findElement(By.xpath("//input[@id='username']")).sendKeys(rs.getString("name"));//sending the username through the database
+		driver.findElement(By.xpath("//input[@id='password']")).sendKeys(rs.getString("id"));//sending the password through database
+		
+		//System.out.println(rs.getString("id"));
+		//System.out.println(rs.getString("name"));
+		//System.out.println(rs.getString("age"));
 		
 	}
 
